@@ -394,18 +394,23 @@ nk_do_button_text_image(nk_flags *state,
     ret = nk_do_button(state, out, bounds, style, in, behavior, &content);
     icon.y = bounds.y + style->padding.y;
     icon.w = icon.h = bounds.h - 2 * style->padding.y;
-    if (align & NK_TEXT_ALIGN_LEFT) {
-        icon.x = (bounds.x + bounds.w) - (2 * style->padding.x + icon.w);
-        icon.x = NK_MAX(icon.x, 0);
-    } else icon.x = bounds.x + 2 * style->padding.x;
+//  if (align & NK_TEXT_ALIGN_LEFT) {
+//      icon.x = (bounds.x + bounds.w) - (2 * style->padding.x + icon.w);
+//      icon.x = NK_MAX(icon.x, 0);
+//  } else icon.x = bounds.x + 2 * style->padding.x;
 
+    icon.x = bounds.x + 2 * style->padding.x;
     icon.x += style->image_padding.x;
     icon.y += style->image_padding.y;
     icon.w -= 2 * style->image_padding.x;
     icon.h -= 2 * style->image_padding.y;
 
+    content.x += icon.w;
+    content.x += 2*style->padding.x;
+    content.x += 4*style->image_padding.x;
+
     if (style->draw_begin) style->draw_begin(out, style->userdata);
-    nk_draw_button_text_image(out, &bounds, &content, &icon, *state, style, str, len, font, &img);
+    nk_draw_button_text_image(out, &bounds, &content, &icon, *state, style, str, len, align, font, &img);
     if (style->draw_end) style->draw_end(out, style->userdata);
     return ret;
 }
