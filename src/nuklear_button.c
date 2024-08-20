@@ -351,7 +351,7 @@ NK_LIB void
 nk_draw_button_text_image(struct nk_command_buffer *out,
     const struct nk_rect *bounds, const struct nk_rect *label,
     const struct nk_rect *image, nk_flags state, const struct nk_style_button *style,
-    const char *str, int len, const struct nk_user_font *font,
+    const char *str, int len, nk_flags text_alignment, const struct nk_user_font *font,
     const struct nk_image *img)
 {
     struct nk_text text;
@@ -370,7 +370,7 @@ nk_draw_button_text_image(struct nk_command_buffer *out,
 
     text.text = nk_rgb_factor(text.text, style->color_factor_text);
     text.padding = nk_vec2(0, 0);
-    nk_widget_text(out, *label, str, len, &text, NK_TEXT_CENTERED, font);
+    nk_widget_text(out, *label, str, len, &text, text_alignment, font);
     nk_draw_image(out, *image, img, nk_rgb_factor(nk_white, style->color_factor_background));
 }
 NK_LIB nk_bool
